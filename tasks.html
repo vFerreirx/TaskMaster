@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskMaster - Tarefas</title>
+    <style>
+        /* Estilo simples para um design mais agradável */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            margin-right: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            max-width: 150px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            margin: 10px 0;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        form.inline {
+            display: inline;
+        }
+
+        @media screen and (max-width: 600px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            input[type="text"], button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Tarefas</h1>
+
+    <!-- Exibir mensagem de erro, se houver -->
+    {% if request.args.get('error') %}
+        <p class="error">{{ request.args.get('error') }}</p>
+    {% endif %}
+
+    <!-- Formulário para adicionar uma nova tarefa -->
+    <form action="{{ url_for('add_task') }}" method="POST">
+        <input type="text" name="title" placeholder="Nova tarefa" required>
+        <button type="submit">Adicionar Tarefa</button>
+    </form>
+
+    <!-- Lista de Tarefas -->
+    <ul>
+        {% for task in tasks %}
+            <li>
+                {{ task['title'] }} - 
+                {% if task['completed'] %}
+                    <strong>Concluída</strong>
+                {% else %}
+                    <form action="{{ url_for('complete_task', task_id=task['id']) }}" method="POST" class="inline">
+                        <button type="submit">Marcar como Concluída</button>
+                    </form>
+                {% endif %}
+                
+                <!-- Botão de exclusão -->
+                <form action="{{ url_for('delete_task', task_id=task['id']) }}" method="POST" class="inline">
+                    <button type="submit" onclick="return confirm('Tem certeza que deseja excluir esta tarefa?');">Excluir</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
