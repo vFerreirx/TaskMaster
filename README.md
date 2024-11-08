@@ -13,33 +13,3 @@ Backend: Python com Flask
 Frontend: HTML, CSS e JavaScript
 Banco de Dados: SQLite (para simplicidade)
 Ferramentas: Visual Studio Code, Git/GitHub para controle de versão
-COMO RODAR O PROJETO
-
-Clone o repositório:
-
-bash
-git clone https://github.com/seu-usuario/TaskMaster.git
-Navegue até o diretório do projeto:
-
-bash
-cd TaskMaster
-Crie e ative um ambiente virtual:
-
-bash
-python -m venv venv
-source venv/bin/activate  # No Windows: venv\Scripts\activate
-Instale as dependências:
-
-bash
-pip install -r requirements.txt
-Inicialize o banco de dados:
-
-bash
-flask init-db
-Execute o servidor:
-
-bash
-flask run
-Acesse o aplicativo em http://127.0.0.1:5000/.
-
-Se você deseja contribuir para o projeto, fique à vontade para abrir uma issue ou enviar um pull request.
